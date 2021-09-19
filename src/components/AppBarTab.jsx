@@ -1,12 +1,21 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import theme from "../theme";
+import { Link } from "react-router-native";
 
-function AppBarTab({ title, onPress }) {
+const styles = StyleSheet.create({
+  link: {
+    margin: 10,
+  },
+});
+
+function AppBarTab({ title, to }) {
   return (
-    <Pressable onPress={onPress}>
-      <Text style={theme.appBarTab}>{title}</Text>
-    </Pressable>
+    <View style={styles.link}>
+      <Link to={to}>
+        <Text style={theme.appBarTab}>{title}</Text>
+      </Link>
+    </View>
   );
 }
 
