@@ -4,7 +4,9 @@ import { View, StyleSheet, Button } from "react-native";
 import theme from "../theme";
 
 import FormikTextInput from "./FormikTextInput";
-
+//import useSignIn from "../hooks/useSignIn";
+import { useMutation } from "@apollo/client";
+import { authorize } from "../qraphql/mutations";
 const styles = StyleSheet.create({
   btnWrapper: {
     margin: 9,
@@ -12,6 +14,10 @@ const styles = StyleSheet.create({
 });
 
 const SignIn = () => {
+  const [signIn, result] = useMutation(authorize);
+
+  console.log(result);
+
   return (
     <Formik
       initialValues={{
@@ -20,6 +26,14 @@ const SignIn = () => {
       }}
       onSubmit={(values) => {
         console.log(values);
+        signIn({
+          variables: {
+            credentials: {
+              username: values.username,
+              password: values.password,
+            },
+          },
+        });
       }}
       validate={(values) => {
         const errors = {};
