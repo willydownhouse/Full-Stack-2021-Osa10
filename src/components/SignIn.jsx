@@ -1,12 +1,16 @@
 import React from "react";
+import { useHistory } from "react-router-native";
 import { Formik } from "formik";
 import { View, StyleSheet, Button } from "react-native";
 import theme from "../theme";
 
 import FormikTextInput from "./FormikTextInput";
-//import useSignIn from "../hooks/useSignIn";
+
 import { useMutation } from "@apollo/client";
 import { authorize } from "../qraphql/mutations";
+import useAuthStorage from "../hooks/useAuthStorage";
+import { useApolloClient } from "@apollo/client";
+
 const styles = StyleSheet.create({
   btnWrapper: {
     margin: 9,
@@ -14,9 +18,32 @@ const styles = StyleSheet.create({
 });
 
 const SignIn = () => {
-  const [signIn, result] = useMutation(authorize);
+  const [signIn] = useMutation(authorize);
+  const authStorage = useAuthStorage();
+  const client = useApolloClient();
+  let history = useHistory();
 
-  console.log(result);
+  const onFormSubmit = async ({ username, password }) => {
+    try {
+      const { data } = await signIn({
+        variables: {
+          credentials: {
+            username,
+            password,
+          },
+        },
+      });
+      console.log(authStorage);
+
+      console.log(data.authorize);
+
+      await authStorage.setAccessToken(data.authorize.accessToken);
+      client.resetStore();
+      history.push("/");
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
     <Formik
@@ -24,17 +51,7 @@ const SignIn = () => {
         username: "",
         password: "",
       }}
-      onSubmit={(values) => {
-        console.log(values);
-        signIn({
-          variables: {
-            credentials: {
-              username: values.username,
-              password: values.password,
-            },
-          },
-        });
-      }}
+      onSubmit={onFormSubmit}
       validate={(values) => {
         const errors = {};
         const required = "Field is required";

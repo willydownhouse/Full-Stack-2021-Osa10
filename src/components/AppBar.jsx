@@ -1,8 +1,12 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Text, Pressable } from "react-native";
 import Constants from "expo-constants";
 import theme from "../theme";
 import AppBarTab from "./AppBarTab";
+import { useQuery } from "@apollo/client";
+import { AUTHORIZED_USER } from "../qraphql/queries";
+import useAuthStorage from "../hooks/useAuthStorage";
+import { useApolloClient } from "@apollo/client";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,11 +22,26 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const { data } = useQuery(AUTHORIZED_USER);
+  const authStorage = useAuthStorage();
+  const client = useApolloClient();
+
+  console.log("FROM APPBAR");
+  console.log(data);
+
+  const tabTitle = data && data.authorizedUser ? "Sign out" : "Sign in";
+
+  const onPress = async () => {
+    await authStorage.removeAccessToken();
+    client.resetStore();
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab title="Repositorios" to="/" />
-        <AppBarTab title="Sign in" to="/signin" />
+
+        <AppBarTab onPress={onPress} title={tabTitle} to="/signin" />
       </ScrollView>
     </View>
   );

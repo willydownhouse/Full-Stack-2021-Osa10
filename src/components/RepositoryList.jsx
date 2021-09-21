@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, View, StyleSheet, Text } from "react-native";
 import useRepositorios from "../hooks/useRepositorios";
 import RepositoryItem from "./RepositoryItem";
+import useAuthStorage from "../hooks/useAuthStorage";
 
 const styles = StyleSheet.create({
   separator: {

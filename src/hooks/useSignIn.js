@@ -1,12 +1,21 @@
 import { useMutation } from "@apollo/client";
 import { authorize } from "../qraphql/mutations";
 
-const useSignIn = (credentials) => {
-  const [signIn, result] = useMutation(authorize(credentials));
+const useSignIn = () => {
+  const [mutate, result] = useMutation(authorize);
 
-  console.log(result);
-  console.log(signIn);
-  return {};
+  const signIn = ({ username, password }) => {
+    mutate({
+      variables: {
+        credentials: {
+          username,
+          password,
+        },
+      },
+    });
+  };
+
+  return [signIn, result];
 };
 
 export default useSignIn;

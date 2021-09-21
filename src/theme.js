@@ -25,6 +25,7 @@ const theme = {
   appBarTab: {
     color: "#fff",
     fontSize: 20,
+    cursor: "pointer",
   },
   loginInput: {
     height: 35,
