@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from "react-router-native";
 import RepositoryList from "./RepositoryList";
 import AppBar from "./AppBar";
 import SignIn from "./SignIn";
+import SingleRepositoryView from "./SingleRepositoryView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import useAuthStorage from "../hooks/useAuthStorage";
 
@@ -34,8 +35,11 @@ const Main = () => {
         <Route exact path="/">
           <RepositoryList />
         </Route>
-        <Route path="/signin">
+        <Route exact path="/signin">
           <SignIn />
+        </Route>
+        <Route path="/:id">
+          <SingleRepositoryView />
         </Route>
         <Redirect to="/" />
       </Switch>

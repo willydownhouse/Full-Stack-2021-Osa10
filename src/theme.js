@@ -25,7 +25,7 @@ const theme = {
   appBarTab: {
     color: "#fff",
     fontSize: 20,
-    cursor: "pointer",
+    //cursor: "pointer",
   },
   loginInput: {
     height: 35,
@@ -44,6 +44,9 @@ const theme = {
     borderColor: "red",
     borderWidth: 1,
     borderRadius: 2,
+  },
+  btnWrapper: {
+    margin: 10,
   },
 };
 

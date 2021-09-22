@@ -5,7 +5,7 @@ import Text from "./Text";
 function ItemDetails({ num, title }) {
   return (
     <View>
-      <Text fontWeight="bold">
+      <Text testID="count" fontWeight="bold">
         {num > 999 ? `${(num / 1000).toFixed(1)}k` : num}
       </Text>
       <Text color="textSecondary">{title}</Text>

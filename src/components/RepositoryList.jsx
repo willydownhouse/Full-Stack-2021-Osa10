@@ -2,7 +2,6 @@ import React from "react";
 import { FlatList, View, StyleSheet, Text } from "react-native";
 import useRepositorios from "../hooks/useRepositorios";
 import RepositoryItem from "./RepositoryItem";
-import useAuthStorage from "../hooks/useAuthStorage";
 
 const styles = StyleSheet.create({
   separator: {
@@ -15,6 +14,16 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
   const { repositories, loading, error } = useRepositorios();
 
+  return (
+    <RepositoryListContainer
+      repositories={repositories}
+      loading={loading}
+      error={error}
+    />
+  );
+};
+
+export const RepositoryListContainer = ({ repositories, loading, error }) => {
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>{`Error! ${error.message}`}</Text>;
 
@@ -27,6 +36,7 @@ const RepositoryList = () => {
       renderItem={({ item }) => {
         return <RepositoryItem item={item} />;
       }}
+      keyExtractor={(item, index) => index.toString()}
     />
   );
 };
