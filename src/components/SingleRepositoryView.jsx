@@ -11,7 +11,7 @@ import ReviewsList from "./ReviewsList";
 function SingleRepositoryView() {
   const { id } = useParams();
   const { data, loading, error } = useQuery(GET_ONE_REPO, {
-    //fetchPolicy: "cache-and-network",
+    fetchPolicy: "cache-and-network",
     variables: {
       id,
     },

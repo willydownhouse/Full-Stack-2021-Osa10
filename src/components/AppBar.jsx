@@ -39,9 +39,15 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
-        <AppBarTab title="Repositorios" to="/" />
+        <AppBarTab title="Repositories" to="/" />
+        {data && data.authorizedUser ? (
+          <AppBarTab title="Create a review" to="/createReview" />
+        ) : null}
 
         <AppBarTab onPress={onPress} title={tabTitle} to="/signin" />
+        {data && !data.authorizedUser ? (
+          <AppBarTab title="Sign up" to="/signup" />
+        ) : null}
       </ScrollView>
     </View>
   );

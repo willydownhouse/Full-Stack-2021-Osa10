@@ -14,7 +14,6 @@ import { Link } from "react-router-native";
 const styles = StyleSheet.create({
   cont: {
     padding: 10,
-    //cursor: "pointer",
   },
   topDiv: {
     display: "flex",

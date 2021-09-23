@@ -6,7 +6,7 @@ import useAuthStorage from "../hooks/useAuthStorage";
 import { useApolloClient } from "@apollo/client";
 import SignInForm from "./SignInForm";
 
-const SignIn = () => {
+const SignIn = ({ setNotification }) => {
   const [signIn] = useMutation(authorize);
   const authStorage = useAuthStorage();
   const client = useApolloClient();
@@ -27,7 +27,8 @@ const SignIn = () => {
       client.resetStore();
       history.push("/");
     } catch (err) {
-      console.log(err.message);
+      setNotification(err.message);
+      setTimeout(() => setNotification(null), 3000);
     }
   };
 

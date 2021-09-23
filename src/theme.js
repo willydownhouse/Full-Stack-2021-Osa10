@@ -5,10 +5,12 @@ const theme = {
     textPrimary: "#24292e",
     textSecondary: "#586069",
     primary: "#0366d6",
+    red: "red",
   },
   fontSizes: {
     body: 14,
     subheading: 16,
+    rating: 22,
   },
   fonts: {
     //main: "System",

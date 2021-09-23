@@ -28,7 +28,7 @@ export const RepositoryListContainer = ({ repositories, loading, error }) => {
   if (error) return <Text>{`Error! ${error.message}`}</Text>;
 
   const repoNodes = repositories ? repositories.edges.map((el) => el.node) : [];
-
+  console.log(repoNodes);
   return (
     <FlatList
       data={repoNodes}

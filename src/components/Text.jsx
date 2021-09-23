@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
   colorTextSecondary: {
     color: theme.colors.textSecondary,
   },
+  colorRed: {
+    color: theme.colors.red,
+  },
   colorPrimary: {
     color: theme.colors.primary,
   },
@@ -22,14 +25,19 @@ const styles = StyleSheet.create({
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
   },
+  fontSizeRating: {
+    fontSize: theme.fontSizes.rating,
+  },
 });
 
 const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
   const textStyle = [
     styles.text,
     color === "textSecondary" && styles.colorTextSecondary,
+    color === "red" && styles.colorRed,
     color === "primary" && styles.colorPrimary,
     fontSize === "subheading" && styles.fontSizeSubheading,
+    fontSize === "rating" && styles.fontSizeRating,
     fontWeight === "bold" && styles.fontWeightBold,
     style,
   ];

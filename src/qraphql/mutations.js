@@ -7,5 +7,18 @@ export const authorize = gql`
     }
   }
 `;
-
+export const createReview = gql`
+  mutation createReview($review: CreateReviewInput) {
+    createReview(review: $review) {
+      user {
+        username
+      }
+      text
+      repository {
+        id
+      }
+      createdAt
+    }
+  }
+`;
 //authorize(credentials: AuthorizeInput): AuthorizationPayload

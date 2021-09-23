@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
-import Constants from "expo-constants";
-import { Text, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { Route, Switch, Redirect } from "react-router-native";
 
 import RepositoryList from "./RepositoryList";
 import AppBar from "./AppBar";
 import SignIn from "./SignIn";
 import SingleRepositoryView from "./SingleRepositoryView";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Notification from "./Notification";
+
 import useAuthStorage from "../hooks/useAuthStorage";
+import CreateReview from "./CreateReview";
+import SignUp from "./SignUp";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +21,7 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  const [notification, setNotification] = useState(null);
   const authStorage = useAuthStorage();
 
   useEffect(() => {
@@ -31,16 +34,24 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <AppBar />
+      {notification ? <Notification message={notification} /> : null}
       <Switch>
         <Route exact path="/">
           <RepositoryList />
         </Route>
         <Route exact path="/signin">
-          <SignIn />
+          <SignIn setNotification={setNotification} />
+        </Route>
+        <Route exact path="/createReview">
+          <CreateReview setNotification={setNotification} />
+        </Route>
+        <Route exact path="/signup">
+          <SignUp setNotification={setNotification} />
         </Route>
         <Route path="/:id">
           <SingleRepositoryView />
         </Route>
+
         <Redirect to="/" />
       </Switch>
     </View>
