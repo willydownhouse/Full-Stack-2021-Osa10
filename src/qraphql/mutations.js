@@ -21,4 +21,13 @@ export const createReview = gql`
     }
   }
 `;
-//authorize(credentials: AuthorizeInput): AuthorizationPayload
+
+export const createUser = gql`
+  mutation createUser($user: CreateUserInput) {
+    createUser(user: $user) {
+      id
+      username
+      createdAt
+    }
+  }
+`;

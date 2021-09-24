@@ -11,15 +11,20 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryList = () => {
-  const { repositories, loading, error } = useRepositorios();
+const RepositoryList = ({ selectedValue, filterValue }) => {
+  const { repositories, loading, error } = useRepositorios(
+    selectedValue,
+    filterValue
+  );
 
   return (
-    <RepositoryListContainer
-      repositories={repositories}
-      loading={loading}
-      error={error}
-    />
+    <>
+      <RepositoryListContainer
+        repositories={repositories}
+        loading={loading}
+        error={error}
+      />
+    </>
   );
 };
 

@@ -11,6 +11,9 @@ import Notification from "./Notification";
 import useAuthStorage from "../hooks/useAuthStorage";
 import CreateReview from "./CreateReview";
 import SignUp from "./SignUp";
+import RepoSorter from "./RepoSorter";
+import SearchBar from "./SearchBar";
+import { useDebounce } from "use-debounce";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +25,9 @@ const styles = StyleSheet.create({
 
 const Main = () => {
   const [notification, setNotification] = useState(null);
+  const [selectedValue, setSelectedValue] = useState("");
+  const [filterValue, setFilterValue] = useState("");
+  //const [value] = useDebounce(filterValue, 1000);
   const authStorage = useAuthStorage();
 
   useEffect(() => {
@@ -37,7 +43,18 @@ const Main = () => {
       {notification ? <Notification message={notification} /> : null}
       <Switch>
         <Route exact path="/">
-          <RepositoryList />
+          <SearchBar
+            setFilterValue={setFilterValue}
+            filterValue={filterValue}
+          />
+          <RepoSorter
+            setSelectedValue={setSelectedValue}
+            selectedValue={selectedValue}
+          />
+          <RepositoryList
+            selectedValue={selectedValue}
+            filterValue={filterValue}
+          />
         </Route>
         <Route exact path="/signin">
           <SignIn setNotification={setNotification} />
