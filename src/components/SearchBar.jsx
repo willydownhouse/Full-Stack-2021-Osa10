@@ -1,11 +1,14 @@
 import React from "react";
 import { View } from "react-native";
 import { Searchbar } from "react-native-paper";
-//import { useDebouncedCallback } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 
-function SearchBar({ filterValue, setFilterValue }) {
-  const onChange = (value) => {
+function SearchBar({ setFilterValue }) {
+  const debounced = useDebouncedCallback((value) => {
     setFilterValue(value);
+  }, 500);
+  const onChange = (value) => {
+    debounced(value);
   };
 
   return (
@@ -13,7 +16,7 @@ function SearchBar({ filterValue, setFilterValue }) {
       <Searchbar
         placeholder="Filter repositories"
         onChangeText={onChange}
-        value={filterValue}
+        defaultValue=""
       />
     </View>
   );

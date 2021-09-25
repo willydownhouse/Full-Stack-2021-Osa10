@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 function ReviewsList({ id }) {
-  const { reviews, loading, error } = useReviews(id);
+  const { reviews, loading, error, fetchMore } = useReviews(id);
 
   if (loading) {
     return (
@@ -23,6 +23,11 @@ function ReviewsList({ id }) {
       </View>
     );
   }
+
+  const onEndReach = () => {
+    console.log("FETCH REVIEWS");
+    fetchMore();
+  };
 
   const reviewNodes = reviews ? reviews.map((el) => el.node) : [];
 
@@ -34,6 +39,8 @@ function ReviewsList({ id }) {
         return <ReviewItem item={item} />;
       }}
       keyExtractor={(item, index) => index.toString()}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.1}
     />
   );
 }

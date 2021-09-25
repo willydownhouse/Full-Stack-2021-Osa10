@@ -12,10 +12,14 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = ({ selectedValue, filterValue }) => {
-  const { repositories, loading, error } = useRepositorios(
+  const { repositories, loading, error, fetchMore } = useRepositorios(
     selectedValue,
     filterValue
   );
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <>
@@ -23,17 +27,23 @@ const RepositoryList = ({ selectedValue, filterValue }) => {
         repositories={repositories}
         loading={loading}
         error={error}
+        onEndReach={onEndReach}
       />
     </>
   );
 };
 
-export const RepositoryListContainer = ({ repositories, loading, error }) => {
+export const RepositoryListContainer = ({
+  repositories,
+  loading,
+  error,
+  onEndReach,
+}) => {
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>{`Error! ${error.message}`}</Text>;
 
   const repoNodes = repositories ? repositories.edges.map((el) => el.node) : [];
-  console.log(repoNodes);
+
   return (
     <FlatList
       data={repoNodes}
@@ -42,6 +52,8 @@ export const RepositoryListContainer = ({ repositories, loading, error }) => {
         return <RepositoryItem item={item} />;
       }}
       keyExtractor={(item, index) => index.toString()}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.1}
     />
   );
 };

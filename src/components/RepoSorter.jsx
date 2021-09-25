@@ -19,8 +19,8 @@ const RepoSorter = ({ selectedValue, setSelectedValue }) => {
         onValueChange={onChange}
       >
         <Picker.Item label="Latest repositories" value="" />
-        <Picker.Item label="Highest rated" value="DESC RATING_AVERAGE" />
-        <Picker.Item label="Lowest rated" value="ASC RATING_AVERAGE" />
+        <Picker.Item label="Highest rated" value="DESC" />
+        <Picker.Item label="Lowest rated" value="ASC" />
       </Picker>
     </View>
   );

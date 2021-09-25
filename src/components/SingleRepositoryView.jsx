@@ -24,7 +24,6 @@ function SingleRepositoryView() {
       </View>
     );
 
-  console.log(data);
   return (
     <View>
       <RepositoryItem item={data.repository} />

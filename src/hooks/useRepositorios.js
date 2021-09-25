@@ -1,24 +1,43 @@
 import { useState, useEffect } from "react";
 import { GET_REPOSITORIES } from "../qraphql/queries";
 import { useQuery } from "@apollo/client";
+import { toQueryOptions } from "../utils/toQueryOtpions";
 
-const useRepositorios = (...values) => {
+const useRepositorios = (selectedValue, filterValue) => {
   const [repos, setRepos] = useState();
 
-  console.log(values);
+  const queryOptions = toQueryOptions(selectedValue, filterValue);
 
-  const sortingParams = values[0];
-  const filter = values[1];
+  const { data, error, loading, fetchMore } = useQuery(
+    GET_REPOSITORIES,
+    queryOptions
+  );
 
-  //const queryParams = selectedValue.split(" ");
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
 
-  let queryOptions = {};
+    if (!canFetchMore) {
+      return;
+    }
 
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, queryOptions);
+    const modifiedQueryOptions = {
+      ...queryOptions,
+      variables: {
+        ...queryOptions.variables,
+        first: 2,
+        after: data.repositories.pageInfo.endCursor,
+      },
+    };
+
+    fetchMore(modifiedQueryOptions);
+  };
 
   useEffect(() => {
     if (!data) return;
     const { repositories } = data;
+
+    console.log("_______________");
+    console.log(repositories.edges.length);
 
     setRepos(repositories);
   }, [data]);
@@ -27,6 +46,7 @@ const useRepositorios = (...values) => {
     repositories: repos,
     loading,
     error,
+    fetchMore: handleFetchMore,
   };
 };
 

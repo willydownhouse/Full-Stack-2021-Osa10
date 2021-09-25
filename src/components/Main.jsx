@@ -13,11 +13,9 @@ import CreateReview from "./CreateReview";
 import SignUp from "./SignUp";
 import RepoSorter from "./RepoSorter";
 import SearchBar from "./SearchBar";
-import { useDebounce } from "use-debounce";
 
 const styles = StyleSheet.create({
   container: {
-    //marginTop: Constants.statusBarHeight,
     flexGrow: 1,
     flexShrink: 1,
   },
@@ -27,7 +25,7 @@ const Main = () => {
   const [notification, setNotification] = useState(null);
   const [selectedValue, setSelectedValue] = useState("");
   const [filterValue, setFilterValue] = useState("");
-  //const [value] = useDebounce(filterValue, 1000);
+
   const authStorage = useAuthStorage();
 
   useEffect(() => {
@@ -43,10 +41,7 @@ const Main = () => {
       {notification ? <Notification message={notification} /> : null}
       <Switch>
         <Route exact path="/">
-          <SearchBar
-            setFilterValue={setFilterValue}
-            filterValue={filterValue}
-          />
+          <SearchBar setFilterValue={setFilterValue} />
           <RepoSorter
             setSelectedValue={setSelectedValue}
             selectedValue={selectedValue}
