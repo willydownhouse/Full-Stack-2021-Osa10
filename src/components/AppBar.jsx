@@ -43,6 +43,9 @@ const AppBar = () => {
         {data && data.authorizedUser ? (
           <AppBarTab title="Create a review" to="/createReview" />
         ) : null}
+        {data && data.authorizedUser ? (
+          <AppBarTab title="My reviews" to="/myreviews" />
+        ) : null}
 
         <AppBarTab onPress={onPress} title={tabTitle} to="/signin" />
         {data && !data.authorizedUser ? (

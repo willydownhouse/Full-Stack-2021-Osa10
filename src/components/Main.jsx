@@ -13,6 +13,7 @@ import CreateReview from "./CreateReview";
 import SignUp from "./SignUp";
 import RepoSorter from "./RepoSorter";
 import SearchBar from "./SearchBar";
+import MyReviews from "./MyReviews";
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +60,9 @@ const Main = () => {
         </Route>
         <Route exact path="/signup">
           <SignUp setNotification={setNotification} />
+        </Route>
+        <Route exact path="/myreviews">
+          <MyReviews />
         </Route>
         <Route path="/:id">
           <SingleRepositoryView />

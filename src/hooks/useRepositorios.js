@@ -24,7 +24,7 @@ const useRepositorios = (selectedValue, filterValue) => {
       ...queryOptions,
       variables: {
         ...queryOptions.variables,
-        first: 2,
+        first: 5,
         after: data.repositories.pageInfo.endCursor,
       },
     };

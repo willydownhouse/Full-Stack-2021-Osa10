@@ -3,6 +3,7 @@ import CreateReviewForm from "./CreateReviewForm";
 import { useMutation } from "@apollo/client";
 import { createReview } from "../qraphql/mutations";
 import { useHistory } from "react-router";
+import { AUTHORIZED_USER, GET_REPO_REVIEWS } from "../qraphql/queries";
 
 function CreateReview({ setNotification }) {
   const [mutate] = useMutation(createReview);
@@ -17,7 +18,23 @@ function CreateReview({ setNotification }) {
             rating: +values.rating,
           },
         },
+        refetchQueries: [
+          {
+            query: AUTHORIZED_USER,
+            variables: {
+              includeReviews: true,
+            },
+          },
+          // {
+          //   query: GET_REPO_REVIEWS,
+          //   variables: {
+          //     id: data.id,
+          //   },
+          // },
+        ],
       });
+
+      console.log(data);
 
       setNotification(
         `Thank you for reviewing ${data.createReview.repository.id}`
