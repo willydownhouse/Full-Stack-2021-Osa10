@@ -28,7 +28,7 @@ function CreateReview({ setNotification }) {
           // {
           //   query: GET_REPO_REVIEWS,
           //   variables: {
-          //     id: data.id,
+          //     id: data.createReview.id,
           //   },
           // },
         ],

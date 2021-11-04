@@ -10,6 +10,7 @@ export const authorize = gql`
 export const createReview = gql`
   mutation createReview($review: CreateReviewInput) {
     createReview(review: $review) {
+      id
       user {
         username
       }

@@ -22,8 +22,30 @@ const styles = StyleSheet.create({
 function MyReviewsButtons({ reviewId, repoId, refetch }) {
   const [deleteOne] = useMutation(deleteReview);
 
+  const createAlert = () => {
+    Alert.alert(
+      "Delete review",
+      "Are you sure you want to delete this review?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+          onPress: () => console.log("cancel"),
+        },
+        {
+          text: "Delete",
+          onPress: () => handleDelete(),
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
   const handleDelete = async () => {
     try {
+      console.log("lets delete this review");
       console.log(reviewId);
       const res = await deleteOne({
         variables: {
@@ -39,7 +61,7 @@ function MyReviewsButtons({ reviewId, repoId, refetch }) {
   return (
     <View style={styles.cont}>
       <Link title="View repository" component={Button} to={`/${repoId}`} />
-      <Button title="Delete review" onPress={handleDelete} color="red" />
+      <Button title="Delete review" onPress={createAlert} color="red" />
     </View>
   );
 }
